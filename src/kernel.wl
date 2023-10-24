@@ -1,7 +1,6 @@
-RegisterWebObject[HTMLForm];
-RegisterWebObject[TextForm];
+TextForm /: MakeBoxes[TextForm[txt_], StandardForm] := With[{o = CreateFrontEndObject[TextForm[txt]]}, MakeBoxes[o, StandardForm]]
+HTMLForm /: MakeBoxes[HTMLForm[txt_], StandardForm] := With[{o = CreateFrontEndObject[HTMLForm[txt]]}, MakeBoxes[o, StandardForm]]
 
-RegisterWebObject[FrontEndTruncated];
 
 Global`SVGForm[x_] := ExportString[x, "SVG"]//HTMLForm;
 
