@@ -1,18 +1,30 @@
-TextForm /: MakeBoxes[TextForm[txt_], StandardForm] := With[{o = CreateFrontEndObject[TextForm[txt]]}, MakeBoxes[o, StandardForm]]
-HTMLForm /: MakeBoxes[HTMLForm[txt_], StandardForm] := With[{o = CreateFrontEndObject[HTMLForm[txt]]}, MakeBoxes[o, StandardForm]]
+PacletRepositories[{
+    Github -> "https://github.com/JerryI/wl-wsp"
+}, "Directory" -> FileNameJoin[{Directory[], "__localkernel", "html-support"}] ];
 
+BeginPackage["Notebook`Editor`HTMLTools`", {
+    "JerryI`Notebook`Kernel`", 
+    "JerryI`Notebook`Transactions`",
+    "JerryI`Misc`Events`",
+    "JerryI`WSP`"
+}]
 
-Global`SVGForm[x_] := ExportString[x, "SVG"]//HTMLForm;
+Begin["`Private`"]
 
-JSRun[x_String, name_String:"JS"] := (StringTemplate["<div class=\"badge badge-danger\">``</div><script>``</script>"][name, x])//HTMLForm;
+Notebook`Editor`HTMLEvaluator = Function[t, 
+            
+            With[{result = JerryI`WSP`LoadString[ t["Data"] ]},
+                EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Result", <|"Data" -> result, "Meta" -> Sequence["Display"->"html"] |> ];
+                EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Finished", True];
+            ];
+];
 
-Options[WebExport] = {
-    Popup -> False 
-};
+End[]
 
-WebOpen[url_] := (
-    WebSocketSend[client, FrontEndJSEval[StringTemplate["window.open('``', '_blank')"][url] ] ];
-);
+HTMLForm /: MakeBoxes[HTMLForm[txt_String], StandardForm] := With[{o = CreateFrontEndObject[HTMLForm[txt]]}, MakeBoxes[o, StandardForm]]
+SVGForm[x_] := ExportString[x, "SVG"]//HTMLForm;
+
+EndPackage[]
 
 
 
