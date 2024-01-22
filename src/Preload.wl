@@ -11,9 +11,9 @@ BeginPackage["Notebook`Editor`HTMLTools`", {
 
 Begin["`Private`"]
 
-Notebook`Editor`HTMLEvaluator = Function[t, 
+Notebook`HTMLEvaluator = Function[t, 
             
-            With[{result = JerryI`WSP`LoadString[ t["Data"] ]},
+            With[{result = LoadString[ t["Data"] ]},
                 EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Result", <|"Data" -> result, "Meta" -> Sequence["Display"->"html"] |> ];
                 EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Finished", True];
             ];
