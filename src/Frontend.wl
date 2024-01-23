@@ -22,7 +22,28 @@ evaluator  = StandardEvaluator["Name" -> "HTML/WSP Evaluator", "InitKernel" -> i
         ,
             (* load kernels stuff. i.e. do it on demand, otherwise it takes too long on the startup *)
             With[{p = Import[FileNameJoin[{rootFolder, "Preload.wl"}], "String"]},
-                Kernel`Init[k,   ToExpression[p, InputForm]; , "Once"->True];
+                Module[{monitor},
+                
+                    monitor["Start"] := With[{},
+                        monitor["Spinner"] = Global`NotificationSpinner["Topic"->"Fetching WSP Packages", "Body"->"Please, wait"];
+                        EventFire[k, monitor["Spinner"], Null];
+                    ];
+
+                    monitor["End"] := With[{},
+                        EventFire[monitor["Spinner"]["Promise"], Resolve, Null];
+                    ];
+
+                    With[{cloned = EventClone[k]},
+                        EventHandler[cloned, {
+                            "Exit" -> Function[Null,
+                                EventRemove[cloned];
+                                monitor["End"];
+                            ]
+                        }];
+                    ];
+
+                    Kernel`Init[k,   ToExpression[p, InputForm]; , "Once"->True, "TrackingProgress" -> monitor];
+                ];
             ];
 
             True
