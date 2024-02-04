@@ -1,6 +1,6 @@
 PacletRepositories[{
     Github -> "https://github.com/JerryI/wl-wsp"
-}, "Directory" -> FileNameJoin[{Directory[], "__localkernel", "html-support"}] ];
+}, "Directory" -> FileNameJoin[{Internal`Kernel`RootDirectory, "__localkernel", "html-support"}] ];
 
 BeginPackage["Notebook`Editor`HTMLTools`", {
     "JerryI`Notebook`Kernel`", 
