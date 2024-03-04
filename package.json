@@ -10,6 +10,7 @@
   "wljs-meta": {
     "frontend" : "src/Frontend.wl",
     "js": "src/kernel.js",
+    "minjs": "src/kernel.js",
     "styles": "src/style.css",
     "category": "Cell types"
   },
