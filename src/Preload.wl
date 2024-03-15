@@ -21,9 +21,6 @@ Notebook`HTMLEvaluator = Function[t,
 
 End[]
 
-HTMLForm /: MakeBoxes[HTMLForm[txt_String], StandardForm] := With[{o = CreateFrontEndObject[HTMLForm[txt]]}, MakeBoxes[o, StandardForm]]
-SVGForm[x_] := ExportString[x, "SVG"]//HTMLForm;
-
 EndPackage[]
 
 
