@@ -8,9 +8,11 @@
   },
   "defaultPackage": true,
   "wljs-meta": {
-    "jsmodule": "dist/kernel.js",
-    "wl": "src/processor.wl",
-    "wlkernel": "src/kernel.wl"
+    "frontend" : "src/Frontend.wl",
+    "js": "src/kernel.js",
+    "minjs": "src/kernel.js",
+    "styles": "src/style.css",
+    "category": "Cell types"
   },
   "repository": {
     "type": "git",

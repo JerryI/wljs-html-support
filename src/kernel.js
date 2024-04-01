@@ -5,13 +5,14 @@ class HTMLCell {
     
     constructor(parent, data) {
       setInnerHTML(parent.element, data);
-      parent.element.classList.add('padding-fix');
+      parent.element.classList.add('margin-bottom-fix');
       return this;
     }
   }
   
+
   window.SupportedLanguages.push({
-    check: (r) => {return(r[0] === '.html')},
+    check: (r) => {return(r[0].match(/\w*\.(html)$/) != null)},
     plugins: [window.html()],
     name: window.htmlLanguage.name
   });
