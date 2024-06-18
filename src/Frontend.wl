@@ -25,7 +25,7 @@ evaluator  = StandardEvaluator["Name" -> "HTML/WSP Evaluator", "InitKernel" -> i
                 Module[{monitor},
                 
                     monitor["Start"] := With[{},
-                        monitor["Spinner"] = Global`NotificationSpinner["Topic"->"Fetching WSP Packages", "Body"->"Please, wait"];
+                        monitor["Spinner"] = Notifications`Spinner["Topic"->"Fetching WSP Packages", "Body"->"Please, wait"];
                         EventFire[k, monitor["Spinner"], Null];
                     ];
 
